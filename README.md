@@ -1,4 +1,4 @@
-MediatR Registrar
+MediatR Libraries
 =================
 We **love** Mediatr! 
 
