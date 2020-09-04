@@ -1,4 +1,5 @@
-using MediatR.Extensions.Microsoft.DependencyInjection.Registrar.Ext;
+using System.Collections.Generic;
+using MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Ext;
 using MediatR.TestLibrary;
 using MediatR.TestLibrary.Ext;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Tests
 {
-    public class UnitTest1
+    public class MediatRLibraryRegistrarTests
     {
         [Fact]
         public void Registering_FooRequestHandler_by_assembly_the_normal_way_should_resolve()
@@ -45,7 +46,7 @@ namespace MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Tests
         {
             // ARRANGE
             var serviceProvider = new ServiceCollection()
-                .AddTestLibraryByType()
+                .AddTestLibraryByMarkerType()
                 .AddMediatRIncludingLibraries()
                 .BuildServiceProvider();
             
@@ -72,6 +73,68 @@ namespace MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Tests
             // ASSERT
             Assert.NotNull(actual);
             Assert.IsType<FooRequestHandler>(actual);
+        }     
+        
+        [Fact]
+        public void Supplied_config_action_should_be_executed_on_registration()
+        {
+            // ARRANGE
+            var configCalls = new List<MediatRServiceConfiguration>();
+            var serviceCollection = new ServiceCollection()
+                .AddTestLibraryByAssemblyWithConfig(config =>
+                {
+                    configCalls.Add(config);
+                });
+
+            // ACT
+            serviceCollection.AddMediatRIncludingLibraries();
+
+            // ASSERT
+            var actual = Assert.Single(configCalls);
+            Assert.NotNull(actual);
+        }
+        
+        [Fact]
+        public void Supplied_config_action_should_be_executed_on_registration_of_assembly()
+        {
+            // ARRANGE
+            var configCalls = new List<MediatRServiceConfiguration>();
+            var serviceCollection = new ServiceCollection()
+                .AddMeditatRLibrary(config =>
+                {
+                    configCalls.Add(config);
+                }, typeof(MediatRLibraryRegistrarTests).Assembly);
+
+            // ACT
+            serviceCollection.AddMediatRIncludingLibraries();
+
+            // ASSERT
+            var actual = Assert.Single(configCalls);
+            Assert.NotNull(actual);
+        }
+        
+        [Fact]
+        public void All_supplied_config_actions_should_be_executed_on_registration_of_assemblies()
+        {
+            // ARRANGE
+            var configCalls = new List<MediatRServiceConfiguration>();
+            var serviceCollection = new ServiceCollection()
+                .AddMeditatRLibrary(config =>
+                {
+                    configCalls.Add(config);
+                }, typeof(MediatRLibraryRegistrarTests))
+                .AddTestLibraryByAssemblyWithConfig(config =>
+                {
+                    configCalls.Add(config);
+                });
+
+            // ACT
+            serviceCollection.AddMediatRIncludingLibraries();
+
+            // ASSERT
+            Assert.Equal(2, configCalls.Count);
+            Assert.NotNull(configCalls[0]);
+            Assert.Equal(configCalls[0], configCalls[1]);
         }
         
         [Fact]
