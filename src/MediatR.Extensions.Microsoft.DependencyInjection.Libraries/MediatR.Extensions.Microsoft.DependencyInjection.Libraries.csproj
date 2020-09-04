@@ -2,6 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <Description>Add library registration support for MediatR</Description>
+        <Copyright>Copyright Lee Oades</Copyright>
+        <AssemblyName>MediatR.Extensions.Microsoft.DependencyInjection.Libraries</AssemblyName>
+        <PackageId>MediatR.Extensions.Microsoft.DependencyInjection.Libraries</PackageId>
+        <PackageTags>mediator;</PackageTags>
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Deterministic>true</Deterministic>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     </PropertyGroup>
 
     <ItemGroup>
