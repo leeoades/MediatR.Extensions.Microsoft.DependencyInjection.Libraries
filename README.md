@@ -4,13 +4,13 @@ We **love** Mediatr!
 
 However, when adding Mediatr to the container (i.e. *IServiceCollection*), a complete list of assemblies to scan must be provided. This might not be known, especially when consuming a library which is consuming other libraries.
 
-The convension in **.net** is for a library to provide an extension method for setting up its container registrations. These abstract the library's dependencies, and it can, in turn, call the extension methods of its dependencies.
+The convention in **.net** is for a library to provide an extension method for setting up its container registrations. These abstract the library's dependencies, and it can, in turn, call the extension methods of its dependencies.
 
-This package provides a mechanism for following this convension when using Mediatr.
+This package provides a mechanism for following this convention when using Mediatr.
 
 Library Mediatr Registrations
 -----------------------------
-Within a library, MediatR registratons are added using *.AddMeditatRLibrary(...)*.
+Within a library, MediatR registrations are added using *.AddMeditatRLibrary(...)*.
 
     // Add an assembly to be scanned by MediatR
     serviceCollection.AddMeditatRLibrary(typeof(MyRequestHandler).Assembly);

@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Description>Add library registration support for MediatR</Description>
+        <Authors>Lee Oades</Authors>
         <Copyright>Copyright Lee Oades</Copyright>
         <AssemblyName>MediatR.Extensions.Microsoft.DependencyInjection.Libraries</AssemblyName>
         <PackageId>MediatR.Extensions.Microsoft.DependencyInjection.Libraries</PackageId>
