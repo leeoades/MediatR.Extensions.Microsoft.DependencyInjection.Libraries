@@ -10,7 +10,7 @@ This package provides a mechanism for following this convention when using Media
 
 Library Mediatr Registrations
 -----------------------------
-Within a library, MediatR registratons are added using *.AddMeditatRLibrary(...)*.
+Within a library, MediatR registrations are added using *.AddMeditatRLibrary(...)*.
 
     // Add an assembly to be scanned by MediatR
     serviceCollection.AddMeditatRLibrary(typeof(MyRequestHandler).Assembly);
