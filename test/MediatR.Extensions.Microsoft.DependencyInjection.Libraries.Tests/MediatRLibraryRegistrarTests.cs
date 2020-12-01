@@ -152,6 +152,17 @@ namespace MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Tests
             Assert.Contains("already registered", exception.Message);
         }
         
-        
+        [Fact]
+        public void Calling_AddMediatRIncludingLibraries_without_any_registered_assemblies_should_not_throw()
+        {
+            // ARRANGE
+            var serviceCollection = new ServiceCollection();
+            
+            // ACT
+            var exception = Record.Exception(() => serviceCollection.AddMediatRIncludingLibraries());
+            
+            // ASSSERT
+            Assert.Null(exception);
+        }
     }
 }

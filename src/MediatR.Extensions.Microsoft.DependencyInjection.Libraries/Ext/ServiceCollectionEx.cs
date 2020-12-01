@@ -59,7 +59,12 @@ namespace MediatR.Extensions.Microsoft.DependencyInjection.Libraries.Ext
             var isMediatRAlreadyRegistered = serviceCollection.Any(c => c.ServiceType == typeof(IMediator));
             if (isMediatRAlreadyRegistered) throw new Exception($"MediatR is already registered in the container. {nameof(AddMediatRIncludingLibraries)} can not run.");
 
-            return serviceCollection.AddMediatR(MediatRLibraryRegistrar.GetAssemblies().ToArray(), MediatRLibraryRegistrar.GetConfigurationActions());
+            // If there aren't any assemblies registered, then don't add Mediator as it will error. "No assemblies found to scan. Supply at least one assembly to scan for handlers."
+            var assembliesToScan = MediatRLibraryRegistrar.GetAssemblies().ToArray();
+            if (assembliesToScan.Any())
+                return serviceCollection
+                    .AddMediatR(assembliesToScan, MediatRLibraryRegistrar.GetConfigurationActions());
+            return serviceCollection;
         }
     }
 }
